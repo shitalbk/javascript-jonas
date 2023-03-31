@@ -23,3 +23,30 @@ Hints:
 § To check if number A is at least double number B, check for A >= 2 * B.
 Apply this to the team's average scores 😉
 */
+
+const calcAverage = (scoreOne,scoreTwo,scoreThree) => {
+   const average = (scoreOne+scoreTwo+scoreThree)/3;
+   return average;
+}
+const avgDolphins = () => {
+  const avgDolphin = calcAverage(85,54,41);
+  return avgDolphin;
+}
+const avgKoalas = () => {
+  const avgKoala = calcAverage(23,34,27);
+  return avgKoala;
+}
+const checkWinner = (avgDolphins, avgKoalas) => {
+  const avgDol = avgDolphins();
+  const avgKoal = avgKoalas();
+  if(avgDol >= (2 * avgKoal)){
+    console.log(`Dolphins Win 🐬 ${avgDol} vs ${avgKoal} `);
+  }
+  else if(avgKoal >= (2 * avgDol)){
+    console.log(`Koalas Win 🐨 ${avgDol} vs ${avgKoal} `);
+  }
+  else{
+    console.log('No team Wins!!!');
+  }
+}
+checkWinner(avgDolphins,avgKoalas);
