@@ -35,15 +35,15 @@ const john = {
 };
 
 const mark_BMI = mark.calcBMI();
-console.log("Mark's BMI = " + mark_BMI.toFixed(2));
+console.log(mark.firstName + " " + mark.lastName + "'s BMI = " + mark_BMI.toFixed(2));
 const john_BMI = john.calcBMI();
-console.log("John's BMI = " + john_BMI.toFixed(2));
+console.log(john.firstName + " " + john.lastName + "'s BMI = " + john_BMI.toFixed(2));
 const higher_BMI = mark_BMI > john_BMI ? mark_BMI : john_BMI;
 console.log("Higher BMI = " + higher_BMI.toFixed(2));
 
 if(mark_BMI > john_BMI){
-  console.log(`Mark's BMI ${mark_BMI.toFixed(2)} is higher than John's ${john_BMI.toFixed(2)}!`);
+  console.log(mark.firstName + " " + mark.lastName + `'s BMI ${mark_BMI.toFixed(2)} is higher than John's ${john_BMI.toFixed(2)}!`);
 }
 else{
-  console.log(`John's BMI ${john_BMI.toFixed(2)} is higher than Mark's ${mark_BMI.toFixed(2)}!!!`);
+  console.log(john.firstName + " " + john.lastName + `'s BMI ${john_BMI.toFixed(2)} is higher than Mark's ${mark_BMI.toFixed(2)}!!!`);
 }
