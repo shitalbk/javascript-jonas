@@ -21,7 +21,8 @@ const scores = [0, 0];
 let currentScore = 0;
 let playerScore = 0;
 let activePlayer = 0;
-let playerScre = 0;
+let newScore = 0;
+
 
 const buttonRoll = function() {
   console.log('Button is clicked!!!');
@@ -37,10 +38,9 @@ const buttonRoll = function() {
   if (dice !== 1) {
     // Add dice to current score
     currentScore += dice;
-    document.getElementById(
-      `current--${activePlayer}`
-    ).textContent = currentScore;
+    document.getElementById(`current--${activePlayer}`).textContent = currentScore;
     console.log("Current Score " +  currentScore);
+    
   } else {
     // Switch to next player
     document.getElementById(`current--${activePlayer}`).textContent = 0;
@@ -52,24 +52,33 @@ const buttonRoll = function() {
 };
 const buttonHold = function() {
   console.log('Hold Button');
-  // current player value
   
     console.log("Current Score " +  currentScore);
-    console.log("Player Score " + playerScre);
-    currentScore += playerScre;
-    document.getElementById(`score--${activePlayer}`).textContent = currentScore;
-    playerScre = Number(document.getElementById(`score--${activePlayer}`).textContent);
-    console.log("Player Value is "+ playerScre);
- 
+    
+    console.log("Player Score " + playerScore);
+    
+    if(activePlayer === 0){
+      document.getElementById(`score--${activePlayer}`).textContent = currentScore + newScore;
+      newScore+= currentScore;
+    }
+     else{
+      document.getElementById(`score--${activePlayer}`).textContent = currentScore + playerScore;
+      playerScore+= currentScore;
+    }
+    
+    //playerScore = Number(document.getElementById(`score--${activePlayer}`).textContent);
+    console.log("Player Value is "+ playerScore);
+    
     document.getElementById(`current--${activePlayer}`).textContent = 0;
     // current player value set to zero
         currentScore = 0;
+       // playerScore = 0;
     // switch player
     activePlayer = activePlayer === 0 ? 1 : 0;
     player0El.classList.toggle('player--active');
     player1El.classList.toggle('player--active');
     console.log("Current Score " +  currentScore);
-  // score 0 value set
+
 };
 
 btnRoll.addEventListener('click', buttonRoll);
