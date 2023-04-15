@@ -13,16 +13,27 @@ const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
 // Starting conditions
-score0El.textContent = 0;
-score1El.textContent = 0;
-diceEl.classList.add('hidden');
+let currentScore, playerScore, activePlayer, newScore, checker;
 
-const scores = [0, 0];
-let currentScore = 0;
-let playerScore = 0;
-let activePlayer = 0;
-let newScore = 0;
-let checker = true;
+const init = function() {
+  currentScore = 0;
+  playerScore = 0;
+  activePlayer = 0;
+  newScore = 0;
+  checker = true;
+
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+
+  diceEl.classList.add('hidden');
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+  player0El.classList.add('player--active');
+  player1El.classList.remove('player--active');
+};
+init();
 
 const switchPlayer = function() {
   document.getElementById(`current--${activePlayer}`).textContent = 0;
@@ -71,23 +82,17 @@ const buttonHold = function() {
 };
 const checkWinner = function() {
   if (newScore >= 100 || playerScore >= 100) {
-    document.querySelector(`.player--${activePlayer}`).classList.add('player--winner');
-    document.querySelector(`.player--${activePlayer}`).classList.remove('player--active');
     checker = false;
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add('player--winner');
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.remove('player--active');
     diceEl.classList.add('hidden');
-    
   }
-};
-const buttonNewGame = function(){
-  console.log('New Game!!!');
-    score0El.textContent = 0;
-    score1El.textContent = 0;
-    player0El.classList.remove('player--winner');
-    player1El.classList.remove('player--winner');
-    checker = true;
-    currentScore = 0;
 };
 
 btnRoll.addEventListener('click', buttonRoll);
 btnHold.addEventListener('click', buttonHold);
-btnNew.addEventListener('click', buttonNewGame);
+btnNew.addEventListener('click', init);
