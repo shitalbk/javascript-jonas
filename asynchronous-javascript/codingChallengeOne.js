@@ -38,19 +38,53 @@ Test data:
 
 */
 
-
-function whereAmI(longitude, latitude){
-  if(navigator.geolocation)
-  navigator.geolocation.getCurrentPosition(
-    function(position){
-      const {latitude} = position.coords;
-      const {longitude} = position.coords;
-      console.log(`https://www.google.pt/maps/@${latitude},${longitude}`);
-    },
-    function(){
-      alert('Could not get your position!!!');
-    }
-  );
+// 1. Finding longitude and latitude of a location
+function whereAmI(longitude, latitude) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
+        // Show a map centered at latitude / longitude.
+        console.log(`https://www.google.pt/maps/@${latitude},${longitude}`);
+      });
 }
 
-whereAmI(52.508, 13.381);
+// 2. Reverse Geocoding using AJAX and fetch API
+
+// Using AJAX call
+function callAjax() {
+  const request = new XMLHttpRequest();
+  whereAmI(52.508, 13.381);
+  request.open('GET', `https://geocode.xyz/52.508,13.381?geoit=json`);
+  request.send();
+  request.addEventListener('load', function(){
+    const data = JSON.parse(this.responseText);
+    console.log(data);
+    console.log(`You are in ${data.country}`);
+  });
+}
+
+const btn = document.querySelector('.btn-country');
+btn.addEventListener('click', callAjax);
+
+// Using Fetch API
+const requestTwo = fetch('https://geocode.xyz/52.508,13.381?geoit=json');
+console.log(requestTwo);
+
+const getData = function(latitude, longitude){
+  fetch(`https://geocode.xyz/${latitude},${longitude}?geoit=json`)
+  .then(function(response){
+    console.log(response);
+  });
+};
+
+getData(52.508, 13.381);
+
+const getLocationData = function(latitude, longitude){
+  fetch(`https://geocode.xyz/${latitude},${longitude}?geoit=json`)
+  .then(response => response.json())
+  .then(function(data) {
+    console.log(data);
+    console.log(`You are in ${data.city}, ${data.country}`);
+  });
+};
+
+getLocationData(52.508, 13.381);
