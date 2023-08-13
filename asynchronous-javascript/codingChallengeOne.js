@@ -115,6 +115,7 @@ const getLocationData = function(latitude, longitude) {
 
 const renderError = function(msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
+  countriesContainer.style.opacity = 1;
 };
 
 const renderCountry = function(data, className = '') {
@@ -128,7 +129,6 @@ const renderCountry = function(data, className = '') {
     </article>
   `;
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
 };
 
 btn.addEventListener('click', function() {
