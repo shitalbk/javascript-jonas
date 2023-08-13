@@ -38,53 +38,100 @@ Test data:
 
 */
 
-// 1. Finding longitude and latitude of a location
-function whereAmI(longitude, latitude) {
-      navigator.geolocation.getCurrentPosition(position => {
-        const { latitude, longitude } = position.coords;
-        // Show a map centered at latitude / longitude.
-        console.log(`https://www.google.pt/maps/@${latitude},${longitude}`);
-      });
-}
-
-// 2. Reverse Geocoding using AJAX and fetch API
-
-// Using AJAX call
-function callAjax() {
-  const request = new XMLHttpRequest();
-  whereAmI(52.508, 13.381);
-  request.open('GET', `https://geocode.xyz/52.508,13.381?geoit=json`);
-  request.send();
-  request.addEventListener('load', function(){
-    const data = JSON.parse(this.responseText);
-    console.log(data);
-    console.log(`You are in ${data.country}`);
-  });
-}
-
 const btn = document.querySelector('.btn-country');
-btn.addEventListener('click', callAjax);
+const countriesContainer = document.querySelector('.countries');
 
-// Using Fetch API
-const requestTwo = fetch('https://geocode.xyz/52.508,13.381?geoit=json');
-console.log(requestTwo);
+// // 1. Finding longitude and latitude of a location
+// function whereAmI(longitude, latitude) {
+//       navigator.geolocation.getCurrentPosition(position => {
+//         const { latitude, longitude } = position.coords;
+//         // Show a map centered at latitude / longitude.
+//         console.log(`https://www.google.pt/maps/@${latitude},${longitude}`);
+//       });
+// }
 
-const getData = function(latitude, longitude){
+// // 2. Reverse Geocoding using AJAX and fetch API
+
+// // Using AJAX call
+// function callAjax() {
+//   const request = new XMLHttpRequest();
+//   whereAmI(52.508, 13.381);
+//   request.open('GET', `https://geocode.xyz/52.508,13.381?geoit=json`);
+//   request.send();
+//   request.addEventListener('load', function(){
+//     const data = JSON.parse(this.responseText);
+//     console.log(data);
+//     console.log(`You are in ${data.country}`);
+//   });
+// }
+
+// // Using Fetch API
+// const requestTwo = fetch('https://geocode.xyz/52.508,13.381?geoit=json');
+// console.log(requestTwo);
+
+// const getData = function(latitude, longitude){
+//   fetch(`https://geocode.xyz/${latitude},${longitude}?geoit=json`)
+//   .then(function(response){
+//     console.log(response);
+//   });
+// };
+
+// getData(52.508, 13.381);
+
+const getLocationData = function(latitude, longitude) {
   fetch(`https://geocode.xyz/${latitude},${longitude}?geoit=json`)
-  .then(function(response){
-    console.log(response);
-  });
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Problem with geocoding ${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+     // console.log(data);
+      console.log(`You are in ${data.city}, ${data.country}`);
+      if (data.latt === '0.00000' && data.longt === '0.00000') {
+        throw new Error(
+          `Latitude and Longitude not found!! ${data.latt} ${data.longt}`);
+      }
+      return fetch(`https://restcountries.com/v3.1/name/${data.country}`);
+    })
+   .then(response => {
+    //  console.log(response);
+      if (!response.ok)
+        throw new Error(`Country not found (${response.status})`);
+     return response.json();
+   })
+    .then(data => {
+     // console.log(data[0]);
+      renderCountry(data[0]);
+    })
+    .catch(err => {
+      console.error(`${err} 🔥☄️⚡️💥💫🌚`);
+      renderError(`Something went wrong 🔥💥 ${err.message}. Try again!`);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
 };
 
-getData(52.508, 13.381);
-
-const getLocationData = function(latitude, longitude){
-  fetch(`https://geocode.xyz/${latitude},${longitude}?geoit=json`)
-  .then(response => response.json())
-  .then(function(data) {
-    console.log(data);
-    console.log(`You are in ${data.city}, ${data.country}`);
-  });
+const renderError = function(msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
 };
 
-getLocationData(52.508, 13.381);
+const renderCountry = function(data, className = '') {
+  const html = `
+    <article class = "country ${className}">
+      <div class = "country__data">
+      <img class="country__img" src="${data.flags.png}"/>
+        <h3 class = "country__name">${data.name.common}</h3>
+        <p class = "country__city">${data.capital}</p>
+      </div>
+    </article>
+  `;
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  countriesContainer.style.opacity = 1;
+};
+
+btn.addEventListener('click', function() {
+  getLocationData(52.508, 13.381);
+  getLocationData(37.09024, -95.71289);
+});

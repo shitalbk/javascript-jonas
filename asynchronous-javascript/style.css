@@ -39,9 +39,9 @@ body {
   background-color: #fff;
   box-shadow: 0 2rem 5rem 1rem rgba(0, 0, 0, 0.1);
   font-size: 1.8rem;
-  width: 30rem;
+  width: 37rem;
   border-radius: 0.7rem;
-  margin: 0 3rem;
+  margin: 3rem;
   /* overflow: hidden; */
 }
 
@@ -123,7 +123,7 @@ body {
 
 .images img {
   display: block;
-  width: 80rem;
+  width: 180rem;
   margin: 4rem;
 }
 
