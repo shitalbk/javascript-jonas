@@ -5,7 +5,7 @@
 //   tq
 // } from './shoppingCart.js';
 
-// console.log('Importing module');
+   console.log('Importing module');
 // addToCart('ginger', 10);
 // console.log(price, tq);
 
@@ -14,12 +14,12 @@
 // ShoppingCart.addToCart('candies',200);
 // console.log(ShoppingCart.totalPrice);
 
-// import add, { cart } from './shoppingCart.js';
+import add, { cart } from './shoppingCart.js';
 
-// add(30, 'Pizzas');
-// add(10, 'Oranges');
-// add(12, 'Apples');
-// console.log(cart);
+add(30, 'Pizzas');
+add(10, 'Oranges');
+add(12, 'Apples');
+console.log(cart);
 
 // console.log('Start fetching!!!');
 // const res = await fetch('https://jsonplaceholder.typicode.com/posts');
@@ -87,6 +87,7 @@ console.log(ShoppingCart2.shippingCost);
 // const { addToCart } = require('./shoppingCart.js');
 
 import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+//import cloneDeep from 'lodash-es';
 
 const state = {
   cart: [
