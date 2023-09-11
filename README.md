@@ -1,1 +1,1 @@
-Javascript Jonas Schmedtmann Version 2
+JavaScript Tutorial (Jonas Schmedtmann Version 2) 
